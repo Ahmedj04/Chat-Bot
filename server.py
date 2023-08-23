@@ -30,21 +30,18 @@ class ChatServer(rpc.ChatServerServicer):  # inheriting here from the protobuf r
                 n = self.chats[lastindex]
                 lastindex += 1
                 yield n
-
+    
     def SendNote(self, request: chat.Note, context):
-        """
-        This method is called when a clients sends a Note to the server.
-
-        :param request:
-        :param context:
-        :return:
-        """
-        # this is only for the server console
         print("[{}] {}".format(request.name, request.message))
-        # Add it to the chat history
-        self.chats.append(request)
-        return chat.Empty()  # something needs to be returned required by protobuf language, we just return empty msg
-   
+        
+        client_message = request.message  # Get the client's message
+        
+        response_message = f"Hi, {request.name}! You said: {client_message}"
+        response_note = chat.Note(name="Server", message=response_message)  # Create a Note message
+        self.chats.append(request)  # Add the client's message to the chat history
+        self.chats.append(response_note)  # Add the response to the chat history
+        
+        return response_note  # Respond with the combined message
     
 
 if __name__ == '__main__':
