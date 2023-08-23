@@ -80,7 +80,8 @@ class ChatServer(rpc.ChatServerServicer):  # inheriting here from the protobuf r
                 f.write(f"[Server] Hi, This is Jarvis, What can I do for you!\n")
 
             for chat_note in self.chats:
-                f.write(f"[{chat_note.name}] {chat_note.message}\n"
+                f.write(f"[{chat_note.name}] {chat_note.message}\n")
+
 
 if __name__ == '__main__':
     port = 11912  # a random port for the server to run on
