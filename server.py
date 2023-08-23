@@ -31,7 +31,7 @@ class ChatServer(rpc.ChatServerServicer):  # inheriting here from the protobuf r
                 lastindex += 1
                 yield n
     
-    def SendNote(self, request: chat.Note, context):
+    # def SendNote(self, request: chat.Note, context):
         print("[{}] {}".format(request.name, request.message))
         
         client_message = request.message  # Get the client's message
@@ -43,6 +43,22 @@ class ChatServer(rpc.ChatServerServicer):  # inheriting here from the protobuf r
         
         return response_note  # Respond with the combined message
     
+    def SendNote(self, request: chat.Note, context):
+        client_message = request.message.lower()  # Get the client's message in lowercase
+        
+        if "hi" in client_message:
+            response_message = f"Hello, {request.name}!"
+        elif "how is the weather" in client_message:
+            response_message = "The weather is good!"
+        else:
+            response_message = "I'm sorry, I don't understand."
+        
+        response_note = chat.Note(name="Server", message=response_message)  # Create a Note message
+        self.chats.append(request)  # Add the client's message to the chat history
+        self.chats.append(response_note)  # Add the response to the chat history
+        
+        return response_note  # Respond with the appropriate message
+
 
 if __name__ == '__main__':
     port = 11912  # a random port for the server to run on
