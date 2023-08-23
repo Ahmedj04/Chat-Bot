@@ -23,7 +23,7 @@ class Client:
         # create new listening thread for when new message streams come in
         threading.Thread(target=self.__listen_for_messages, daemon=True).start()
         self.__setup_ui()
-        self.window.mainloop()
+        self.window.mainloop() 
 
     def __listen_for_messages(self):
         """
@@ -48,6 +48,7 @@ class Client:
             n.message = message  # set the actual message of the note
             print("S[{}] {}".format(n.name, n.message))  # debugging statement
             self.conn.SendNote(n)  # send the Note to the server
+            self.entry_message.delete(0, END)  # Clear the text entry field after sending
 
     def __setup_ui(self):
         self.chat_list = Text()

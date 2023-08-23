@@ -1,0 +1,5 @@
+[Server] Hi, This is Jarvis, What can I do for you!
+[ahmed] hi
+[Server] Hello, ahmed!
+[ahmed] how is the weather
+[Server] The weather is good!
